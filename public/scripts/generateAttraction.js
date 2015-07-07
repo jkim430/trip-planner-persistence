@@ -39,6 +39,7 @@ $(document).ready(function () {
 
 			eraseItineraryItem: function () {
 				this.$itineraryItem.detach();
+				console.log(this.category);
 				return this;
 			},
 

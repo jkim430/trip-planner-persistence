@@ -59,8 +59,23 @@ $(document).ready(function () {
 				newCurrent = days[index] || days[index - 1];
 			days.forEach(function (day, idx) {
 				day.number = idx + 1;
+				// $.ajax({
+				// 	url:'/days/'+idx,
+				// 	type:'post',
+				// 	data:{id:day.number},
+				// 	success:function(data){
+				// 		console.log(data);
+				// 	}
+				// })
 				day.$button.text(day.number);
 			});
+			$.ajax({
+				url:'/days/'+currentDay.number,
+				type:'delete',
+				success:function(data){
+					console.log(data);
+				}
+			})
 			newCurrent.switchTo();
 			previousDay.eraseButton();
 		}
