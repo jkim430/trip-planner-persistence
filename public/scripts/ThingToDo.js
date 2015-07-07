@@ -3,6 +3,7 @@ var ThingToDo;
 $(document).ready(function () {
 	ThingToDo = function (data) {
 		var self = this;
+		this.category = 'thingsToDo'
 		eachKeyValue(data, function (key, val) {
 			self[key] = val;
 		});

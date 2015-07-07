@@ -4,7 +4,12 @@ $(document).ready(function () {
 	generateAttraction = function (config) {
 		config.$all.find('.add').on('click', function () {
 			var attraction = config.$all.find(':selected').data();
-			new config.constructor(attraction);
+			var attr = new config.constructor(attraction);
+			// var dummy = new config.constructor(attraction);
+			// console.log(attraction);
+			$.post('/days/'+currentDay.number+'/'+attr.category, {id: attraction._id}, function(data) {
+				console.log(data);
+			});
 		});
 		config.all.forEach(function (attraction) {
 			var $option = $('<option></option>').text(attraction.name).data(attraction);

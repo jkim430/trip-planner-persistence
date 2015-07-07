@@ -3,6 +3,7 @@ var Hotel;
 $(document).ready(function () {
 	Hotel = function (data) {
 		var self = this;
+		this.category = 'hotel'
 		eachKeyValue(data, function (key, val) {
 			self[key] = val;
 		});

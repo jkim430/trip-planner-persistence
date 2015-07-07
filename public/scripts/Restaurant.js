@@ -3,6 +3,7 @@ var Restaurant;
 $(document).ready(function () {
 	Restaurant = function (data) {
 		var self = this;
+		this.category = 'restaurants';
 		eachKeyValue(data, function (key, val) {
 			self[key] = val;
 		});
