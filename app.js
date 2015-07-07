@@ -16,7 +16,7 @@ swig.setDefaults({cache: false});
 // log and body parse
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // sass middleware
 app.use(

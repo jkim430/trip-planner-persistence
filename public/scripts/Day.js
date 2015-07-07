@@ -67,7 +67,10 @@ $(document).ready(function () {
 	};
 
 	$('#add-day').on('click', function () {
-		new Day();
+		var day = new Day();
+		$.post("/days", {number: day.number}, function(data) {
+			all_days[day.number] = data;
+		})
 	});
 
 	$('#day-title > .remove').on('click', deleteCurrentDay);
