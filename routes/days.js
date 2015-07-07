@@ -5,7 +5,7 @@ var models = require('../models');
 // GET /days
 dayRouter.get('/', function (req, res, next) {
     // serves up all days as json
-    models.Day.find().exec()
+    models.Day.find({}).exec()
     .then(function(data) {
 
     })
@@ -43,24 +43,55 @@ dayRouter.post('/', function (req, res, next) {
 // GET /days/:id
 dayRouter.get('/:id', function (req, res, next) {
     // serves a particular day as json
+    models.Day.find({number:req.params.id})
+            .exec()
+            .then(function(day){
+                res.json(day);
+            })
+    res.locals.dayNumber = req.params.id;
+    next();
 });
 // DELETE /days/:id
 dayRouter.delete('/:id', function (req, res, next) {
     // deletes a particular day
+    models.Day.find({number:req.params.id})
+        .remove()
+        .exec()
+        .then(function(data){
+            res.json(data);
+        })
 });
 
+dayRouter.param('id',function(req,res,next,id){
+    req.id = id;
+    next();
+})
 dayRouter.use('/:id', attractionRouter);
 // POST /days/:id/hotel
+
 attractionRouter.post('/hotel', function (req, res, next) {
-    // creates a reference to the hotel
+    models.Hotel.findOne({name:req.body.hotel})
+                .exec()
+                .then(function(hotel){
+                    models.Day.findOneAndUpdate({number:req.id},
+                        {hotel:hotel._id},{upsert:true},function(err,day){
+                        res.end();
+                    })
+                    // return models.Day.findOne({number:req.id}).exec();
+                })
+
 });
 // DELETE /days/:id/hotel
 attractionRouter.delete('/hotel', function (req, res, next) {
-    // deletes the reference of the hotel
+    models.Day.update({number:req.id},{$unset:{hotel:1}},function(err,data){
+        res.end();
+    })
+
 });
 // POST /days/:id/restaurants
 attractionRouter.post('/restaurants', function (req, res, next) {
     // creates a reference to a restaurant
+
 });
 // DELETE /days/:dayId/restaurants/:restId
 attractionRouter.delete('/restaurant/:id', function (req, res, next) {
